@@ -1,0 +1,23 @@
+<div class="modal-header" ng-class="'modal-header-' + panelType">
+    <h3 ng-if="title" class="modal-title">{{ title }}</h3>
+    <h3 ng-if="degree" class="modal-title">{{ degree }}</h3>
+</div>
+<div class="modal-body">
+    <p ng-if="company"><strong>{{ company }}</strong></p>
+    <p ng-if="school"><strong>{{ school }}</strong></p>
+    <p class="greyed-out"><em>{{ start }} - {{ end }}</em></p>
+    <blockquote class="item-description br" ng-if="description">
+        {{ description }}
+        <p></p>
+    </blockquote>
+
+    <h4 ng-if="activities.length > 0">Courses</h4>
+    <ul class="">
+        <li ng-repeat="activity in activities">{{ activity }}</li>
+    </ul>
+
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="close()">Close</button>
+    <!--<button class="btn btn-warning" ng-click="cancel()">Cancel</button>-->
+</div>

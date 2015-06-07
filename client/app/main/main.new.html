@@ -1,0 +1,86 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container">
+    <div class="row">
+        <h1>{{scrape.profile.name}}</h1>
+        <!--<img ng-src="{{scrape.profile.imageUrl}}" alt="Photo of {{scrape.profile.name}}"/>-->
+        <img ng-src="assets/images/ole_frank_jensen_portrait_400x464.jpg" alt="Photo of {{scrape.profile.name}}"/>
+    </div>
+    <hr/>
+    <div class="row">
+        <h3>Summary</h3>
+        <p>{{scrape.summary}}</p>
+    </div>
+    <hr/>
+    <div class="row">
+        <h3>Skills</h3>
+        <ul class="list-group">
+            <li class="list-group-item" ng-repeat="skill in scrape.skills">
+                <span class="badge">{{skill.rating}}</span>
+                {{skill.title}}
+            </li>
+        </ul>
+    </div>
+    <hr/>
+    <div class="row">
+        <h3>Volounteering</h3>
+        <div ng-repeat="vol in scrape.volounteering">
+            <h4>{{vol.title}} at {{vol.company}} <span>{{vol.start}} - {{vol.end}}</span></h4>
+            <p>{{vol.description}}</p>
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+        <h3>Courses</h3>
+        <div class="panel panel-default" ng-repeat="course in scrape.courses">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{course.school}}</h3>
+            </div>
+            <div class="panel-body">
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="item in course.listings">{{item}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+        <h3>Languages</h3>
+        <ul class="list-group">
+            <li class="list-group-item" ng-repeat="lang in scrape.languages">{{lang.lang}}</li>
+        </ul>
+    </div>
+    <hr/>
+    <div class="row">
+        <h3>Projects</h3>
+        <div ng-repeat="project in scrape.projects">
+            <h4>{{project.title}} <span>{{project.start}} - {{project.end}}</span></h4>
+            <p>{{project.description}}</p>
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+        <h3>Education</h3>
+        <div ng-repeat="edu in scrape.education">
+            <h4>{{edu.title}}</h4>
+            <p>{{edu.degree}}</p>
+            <p>{{edu.major}}</p>
+            <p>{{edu.grade}}</p>
+            <p>{{edu.start}} - {{edu.end}}</p>
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="activity in edu.activities">{{activity}}</li>
+            </ul>
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+        <h3>Experience</h3>
+        <div ng-repeat="exp in scrape.experience">
+            <img ng-src="{{exp.logoUrl}}" alt="{{exp.company}} logo"/>
+            <h4>{{exp.title}} at {{exp.company}} <span>{{exp.start}} - {{exp.end}}</span></h4>
+            <p>{{exp.locality}}</p>
+            <p>{{exp.currentPosition}}</p>
+            <p>{{exp.description}}</p>
+        </div>
+    </div>
+</div>

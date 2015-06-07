@@ -1,0 +1,171 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<div class="container resume-wrap">
+
+    <div class="row row-no-padding">
+        <div class="row-same-height">
+
+            <!-- SIDEBAR -->
+            <aside class="col-sm-4 col-md-3 col-sm-height sidebar">
+                <div class="wrapper-inner">
+                    <!-- profile -->
+                    <img class="my-picture" src="assets/images/ole_frank_jensen_portrait_400x400.jpg" alt="A picture of me!"/>
+                    <h3 class="my-name">{{scrape.profile.name}}</h3>
+                    <p class="my-title text-dimmed">Web Developer</p>
+
+                    <contact-me></contact-me>
+
+                    <!-- summary -->
+                    <section class="well sidebar__profile">
+                        <h3>Profile</h3>
+                        <blockquote class="br" ng-bind-html="scrape.summary | linky"></blockquote>
+                    </section>
+
+                    <!-- skills -->
+                    <section class="section sidebar__skills">
+                        <h4 class="text-info">My Skills</h4>
+                        <ul class="list-group">
+                            <li class="list-group-item sidebar-list-item" ng-repeat="skill in scrape.skills | limitTo: 10">{{skill.title}}</li>
+                        </ul>
+                        <a class="hide-link" ng-click="skillsCollapsed = !skillsCollapsed" ng-show="skillsCollapsed">See more <i class="fa fa-chevron-down"></i></a>
+                        <div collapse="skillsCollapsed" class="my-collapse">
+                            <ul class="list-group">
+                                <li class="list-group-item sidebar-list-item" ng-repeat="skill in scrape.skills | limitTo: 11 : 10">{{skill.title}}</li>
+                            </ul>
+                        </div>
+                        <a class="hide-link" ng-click="skillsCollapsed = !skillsCollapsed" ng-show="!skillsCollapsed"><i class="fa fa-chevron-up"></i></a>
+                    </section>
+
+                    <!-- languages -->
+                    <section class="section sidebar__languages">
+                        <h4 class="text-info">My languages</h4>
+                        <ul class="list-group">
+                            <li class="list-group-item sidebar-list-item" ng-repeat="lang in scrape.languages">{{lang.lang}}</li>
+                        </ul>
+                    </section>
+                </div>
+            </aside>
+
+            <!-- MAIN -->
+            <main class="col-sm-8 col-md-9 col-sm-height content">
+                <div class="wrapper-inner">
+
+                    <!-- summary -->
+                    <section class="well content__profile">
+                        <h3>Profile</h3>
+                        <blockquote class="br" ng-bind-html="scrape.summary | linky"></blockquote>
+                    </section>
+
+                    <!-- current position -->
+                    <section class="well">
+                        <h3>Current Position</h3>
+
+                        <div class="row row-with-padding">
+                            <div class="col-md-12" ng-repeat="exp in scrape.experience | filter:{ currentPosition: true }">
+                                <a class="hide-link" ng-href="" ng-click="openModal({data: exp, panelType: 'danger'})">
+                                    <div class="panel panel-danger panel-hover">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">{{exp.title}}</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <p ng-if="exp.company"><strong>{{exp.company}}</strong></p>
+                                            <p class="text-dimmed"><em>{{exp.start}} - {{exp.end}}</em></p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                    </section>
+
+                    <!-- previous experience -->
+                    <section id="experience" class="well">
+                        <h3>Experience</h3>
+
+                        <div class="row row-with-padding">
+                            <div class="col-md-6" ng-repeat="exp in scrape.experience | filter:{ currentPosition: false }">
+                                <a class="hide-link" ng-href="" ng-click="openModal({data: exp, panelType: 'primary'})">
+                                    <div class="panel panel-primary panel-hover">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">{{exp.title}}</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <p ng-if="exp.company"><strong>{{exp.company}}</strong></p>
+                                            <p class="text-dimmed" ng-if="exp.start"><em>{{exp.start}} - {{exp.end}}</em></p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- education -->
+                    <section id="education" class="well">
+                        <h3>Education</h3>
+
+                        <div class="row row-with-padding">
+                            <div class="col-md-6" ng-repeat="edu in scrape.education">
+                                <a class="hide-link" ng-href="" ng-click="openModal({data: edu, panelType: 'success'})">
+                                    <div class="panel panel-success panel-hover">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">{{edu.degree}}</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <p ng-if="edu.school"><strong>{{edu.school}}</strong></p>
+                                            <p class="text-dimmed" ng-if="edu.start"><em>{{edu.start}} - {{edu.end}}</em></p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- projects -->
+                    <section id="projects" class="well">
+                        <h3>Projects</h3>
+
+                        <div class="row row-with-padding">
+                            <div ng-class="{'col-md-6': scrape.projects.length > 1, 'col-md-12': scrape.projects.length <= 1}" ng-repeat="project in scrape.projects">
+                                <a class="hide-link" ng-href="" ng-click="openModal({data: project, panelType: 'warning'})">
+                                    <div class="panel panel-warning panel-hover">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">{{project.title}}</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <p class="text-dimmed" ng-if="project.start"><em>{{project.start}} - {{project.end}}</em></p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- volounteer work -->
+                    <section id="volounteering" class="well">
+                        <h3>Volounteering</h3>
+
+                        <div class="row row-with-padding">
+                            <div ng-class="{'col-md-6': scrape.volounteering.length > 1, 'col-md-12': scrape.volounteering.length <= 1}" ng-repeat="vol in scrape.volounteering">
+                                <!--<div ng-class="{'col-sm-12': true}" ng-repeat="vol in scrape.volounteering">-->
+                                <a class="hide-link" ng-href="" ng-click="openModal({data: vol, panelType: 'info'})">
+                                    <div class="panel panel-info panel-hover">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">{{vol.title}}</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <p ng-if="vol.company"><strong>{{vol.company}}</strong></p>
+                                            <p class="text-dimmed" ng-if="vol.start"><em>{{vol.start}} - {{vol.end}}</em></p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+
+            </main>
+
+        </div>
+    </div>
+</div>
